@@ -15,6 +15,7 @@ With `tabulato`, you can easily format your data into tables with specified head
   - [Defaults](#defaults)
   - [Types](#types)
   - [Description](#description)
+- [License](#license)
 
 ### Key features of tabulato include:
 
@@ -56,6 +57,8 @@ data = [
 colorful_tabulate(headers=headers, data=data, colorful=True, bold_header=True)
 ```
 
+The above function will result in the following table being created in the terminal.
+
 ```shell
 +-------------+----------------+------------+---------------------+
 | Name        | Student Number | DOB        | Email Address       |
@@ -70,6 +73,10 @@ colorful_tabulate(headers=headers, data=data, colorful=True, bold_header=True)
 | Olivia Kim  | S36924         | 1993-10-25 | olivia@example.com  |
 +-------------+----------------+------------+---------------------+
 ```
+
+The colorful table will look as follows:
+
+<p align='center'><img src='/images/demo.jpg' alt='demo' width="400"/></p>
 
 The `colorful_tabulate` is a useful function for visually enhancing tabulated data in terminal output by applying colors and styling.
 
@@ -113,3 +120,7 @@ The `colorful_tabulate` function generates a tabulated representation of data wi
 - `header_color` (optional, default=`"BLUE"`): The color of the header.
 - `even_row_color` (optional, default=`"GREEN"`): The color of even-numbered rows.
 - `odd_row_color` (optional, default=`"YELLOW"`): The color of odd-numbered rows.
+
+### License
+
+This project is licensed under the MIT License - see the [LICENSE](/LISENSE) file for details.
