@@ -41,7 +41,7 @@ This package support python version `>=3.10`
 In the following examples shows you how you can use
 
 ```py
-from tabulato import colorful_tabulate
+from tabulato import colorful_tabulate, TableRowStyle
 
 headers = ["Name", "Student Number", "DOB", "Email Address"]
 
