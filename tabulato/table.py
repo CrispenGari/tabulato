@@ -33,6 +33,37 @@ def colorful_tabulate(
     ),
     column_widths: list[int] = [],
 ) -> None:
+    """
+    Generates a colorful tabular representation of data.
+    Args:
+        data (list[list | dict]): The data to be tabulated. Each element in the
+            outer list represents a row, and each inner list or dictionary
+            represents a cell.
+        headers (list[str] | None, optional): List of strings representing the
+            column headers. If None, no headers will be displayed. Defaults to None.
+        colorful (bool, optional): Flag indicating whether to use colors for
+            styling. Defaults to True.
+        bold_header (bool, optional): Flag indicating whether to make the header
+            text bold. Defaults to True.
+        header_style (Optional[TableRowStyle], optional): Style for the header
+            row. Defaults to a bold, blue text.
+        even_row_style (Optional[TableRowStyle], optional): Style for even-numbered
+            rows. Defaults to plain green text.
+        odd_row_style (Optional[TableRowStyle], optional): Style for odd-numbered
+            rows. Defaults to plain yellow text.
+        column_widths (list[int], optional): List of integers representing the
+            widths of each column. If provided, the table will attempt to adjust
+            the column widths accordingly. Defaults to an empty list.
+
+    Example:
+        >>> data = [
+        ...     ["John", 30, "Male"],
+        ...     ["Jane", 28, "Female"],
+        ...     ["Doe", 35, "Male"]
+        ... ]
+        >>> headers = ["Name", "Age", "Gender"]
+        >>> colorful_tabulate(data, headers=headers)
+    """
     lens = [len(row) for row in data]
     _max = lens[0]
     if not all([_max == length for length in lens]):

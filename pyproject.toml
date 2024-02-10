@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tabulato"
-version = "1.0.0"
+version = "1.0.2"
 authors = [
     {name = "Crispen Gari", email = "crispengari@gmail.com"},
 ]
@@ -42,6 +42,6 @@ issues = "https://github.com/CrispenGari/tabulato/issues"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["tabulato*"]
-exclude = ["tabulato.tests*", 'images', 'tests*', 'tabulato/tests']  
+exclude = ["tabulato.tests*", 'images', 'tests*', 'tabulato/tests', 'example.py']  
 namespaces = false
 
