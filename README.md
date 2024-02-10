@@ -81,7 +81,7 @@ The above function will result in the following table being created in the termi
 
 The colorful table will look as follows:
 
-<p align='center'><img src='/images/0.jpg' alt='demo' width="400"/></p>
+<p align='center'><img src='https://github.com/CrispenGari/tabulato/blob/main/images/0.jpg?raw=true' alt='demo' width="400"/></p>
 
 However you can style the rows of the table using the `TableRowStyle` class by specifying the options as follows:
 
@@ -110,9 +110,7 @@ colorful_tabulate(
 )
 ```
 
-Output:
-
-<p align='center'><img src='/images/1.jpg' alt='demo' width="400"/></p>
+<p align='center'><img src='https://github.com/CrispenGari/tabulato/blob/main/images/1.jpg?raw=true' alt='demo' width="400"/></p>
 
 The table data can also be a list of python dictionaries. Here is an example of using a list of python dictionaries to generate a table.
 
