@@ -1,70 +1,67 @@
-from typing import Literal
+from typing import Optional
+from tabulato.utils import COLOR_LITERAL, get_color, CONFIG, get_bg, BG_COLOR_LITERAL
+from dataclasses import dataclass, field
+
+
+@dataclass(kw_only=True, repr=False)
+class TableRowStyle:
+    bold: bool = field(default=False)
+    italic: bool = field(default=False)
+    underline: bool = field(default=False)
+    strikethrough: bool = field(default=False)
+    color: COLOR_LITERAL = field(default="")
+    background: BG_COLOR_LITERAL = field(default="")
 
 
 class DataMalformedException(Exception):
     pass
 
 
-class CONFIG:
-    RESET = "\033[0m"
-    BLACK = "\033[30m"
-    RED = "\033[31m"
-    GREEN = "\033[32m"
-    YELLOW = "\033[33m"
-    BLUE = "\033[34m"
-    PURPLE = "\033[35m"
-    CYAN = "\033[36m"
-    WHITE = "\033[37m"
-    BOLD = "\033[1m"
-
-
-COLOR_LITERAL = Literal[
-    "BLACK", "RED", "GREEN", "YELLOW", "BLUE", "PURPLE", "CYAN", "WHITE"
-]
-
-
-def get_color(color: COLOR_LITERAL) -> str:
-    if color == "BLACK":
-        return CONFIG.BLACK
-    if color == "RED":
-        return CONFIG.RED
-    if color == "BLUE":
-        return CONFIG.BLUE
-    if color == "WHITE":
-        return CONFIG.WHITE
-    if color == "GREEN":
-        return CONFIG.GREEN
-    if color == "CYAN":
-        return CONFIG.CYAN
-    if color == "PURPLE":
-        return CONFIG.PURPLE
-    if color == "YELLOW":
-        return CONFIG.YELLOW
-
-
 def colorful_tabulate(
-    headers: list[str],
-    data: list[list],
+    data: list[list | dict],
+    headers: list[str] | None = None,
     colorful: bool = True,
     bold_header: bool = True,
-    header_color: COLOR_LITERAL = "BLUE",
-    even_row_color: COLOR_LITERAL = "GREEN",
-    odd_row_color: COLOR_LITERAL = "YELLOW",
+    header_style: Optional[TableRowStyle] = TableRowStyle(
+        bold=True, italic=False, color="BLUE", background=None
+    ),
+    even_row_style: Optional[TableRowStyle] = TableRowStyle(
+        bold=False, italic=False, color="GREEN", background=None
+    ),
+    odd_row_style: Optional[TableRowStyle] = TableRowStyle(
+        bold=False, italic=False, color="YELLOW", background=None
+    ),
+    column_widths: list[int] = [],
 ) -> None:
     lens = [len(row) for row in data]
     _max = lens[0]
-
     if not all([_max == length for length in lens]):
         raise DataMalformedException("The row values must have the same length.")
+
+    if isinstance(data[0], dict):
+        headers = list(data[0].keys())
+        data = [d.values() for d in data]
+    elif isinstance(data[0], list):
+        if headers is None:
+            headers = [f"Column {i+1}" for i, _ in enumerate(data[0])]
+
+    if len(headers) != len(column_widths) and len(column_widths) != 0:
+        raise DataMalformedException(
+            f"The headers and column_width must have the same length but received ({len(headers), len(column_widths)})."
+        )
 
     num_columns = len(data[0])
     if len(headers) != num_columns:
         raise DataMalformedException(
-            f"The headers and rows must have the same shape but received ({len(headers), len(data[0])})."
+            f"The headers and rows must have the same length but received ({len(headers), len(data[0])})."
         )
 
     # Calculate the maximum width for each column
-    column_widths = [max(len(str(row[i])) for row in data) for i in range(num_columns)]
+    column_widths = (
+        column_widths
+        if len(column_widths) != 0
+        else [max(len(str(row[i])) for row in data) for i in range(num_columns)]
+    )
 
     # Adjust column widths if headers are longer
     for i, header in enumerate(headers):
@@ -78,13 +75,7 @@ def colorful_tabulate(
     for i, header in enumerate(headers):
         if colorful:
             print("| ", end="")
-            print(
-                get_color(header_color)
-                + (CONFIG.BOLD if bold_header else "")
-                + f"{str(header):<{column_widths[i]}} "
-                + CONFIG.RESET,
-                end="",
-            )
+            styled_text(style=header_style, width=column_widths[i], text=header)
         else:
             print("| ", end="")
             print(
@@ -104,24 +95,17 @@ def colorful_tabulate(
     # Print the data rows
     for index, row in enumerate(data):
         for i, cell in enumerate(row):
+            print("| ", end="")
             if colorful:
-                print("| ", end="")
                 if index % 2 == 0:
-                    print(
-                        get_color(even_row_color)
-                        + f"{str(cell):<{column_widths[i]}} "
-                        + CONFIG.RESET,
-                        end="",
+                    styled_text(
+                        style=even_row_style, text=str(cell), width=column_widths[i]
                     )
                 else:
-                    print(
-                        get_color(odd_row_color)
-                        + f"{str(cell):<{column_widths[i]}} "
-                        + CONFIG.RESET,
-                        end="",
+                    styled_text(
+                        style=odd_row_style, text=str(cell), width=column_widths[i]
                     )
             else:
-                print("| ", end="")
                 print(
                     f"{str(cell):<{column_widths[i]}} ",
                     end="",
@@ -133,3 +117,18 @@ def colorful_tabulate(
     for width in column_widths:
         print("-" * (width + 2) + "+", end="")
     print()
+
+
+def styled_text(style: TableRowStyle, text: str, width: int):
+    print(
+        get_bg(style.background)
+        + get_color(style.color)
+        + (CONFIG.BOLD if style.bold else "")
+        + (CONFIG.ITALIC if style.italic else "")
+        + (CONFIG.ITALIC if style.italic else "")
+        + (CONFIG.STRIKETHROUGH if style.strikethrough else "")
+        + (CONFIG.UNDERLINE if style.underline else "")
+        + f"{str(text):<{width}} "
+        + CONFIG.RESET,
+        end="",
+    )
