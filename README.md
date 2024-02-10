@@ -10,6 +10,7 @@ With `tabulato`, you can easily format your data into tables with specified head
 - [Table of Contents](#table-of-contents)
 - [Key features of tabulato include:](#key-features-of-tabulato-include)
 - [Installation](#installation)
+- [Python Version](#python-version)
 - [Example](#example)
 - [What's missing on this package?](#whats-missing-on-this-package)
 - [License](#license)
@@ -30,6 +31,10 @@ To install tabulato, you can use pip:
 ```bash
 pip install tabulato
 ```
+
+### Python Version
+
+This package support python version `>=3.10`
 
 ### Example
 
