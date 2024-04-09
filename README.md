@@ -20,6 +20,7 @@ With `tabulato`, you can easily format your data into tables with specified head
 - [Python Version](#python-version)
 - [Example](#example)
 - [What's missing on this package?](#whats-missing-on-this-package)
+- [Docs](#docs)
 - [License](#license)
 
 ### Key features of tabulato include:
@@ -220,6 +221,10 @@ The following are the color literals that can be passed to the `color` abd `back
 ### What's missing on this package?
 
 This package lacks `wrapping` of text for long lines. This `version` only support small tables. Long column data might not end up displayed well, however with small column data like this package is the best.
+
+### Docs
+
+You can read the full documentation [here](https://tabulato.readthedocs.io/en/latest/).
 
 ### License
 
