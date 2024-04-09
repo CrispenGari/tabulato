@@ -29,7 +29,7 @@ With `tabulato`, you can easily format your data into tables with specified head
 - Option to make headers bold for emphasis.
 - User-friendly API for straightforward integration into your Python projects.
 
-> tabulato simplifies the task of formatting and presenting tabular data in terminal environments, making it an essential tool for developers and data scientists working with command-line interfaces.
+> `tabulato` simplifies the task of formatting and presenting tabular data in terminal environments, making it an essential tool for developers and data scientists working with command-line interfaces.
 
 ### Installation
 
